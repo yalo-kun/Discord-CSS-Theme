@@ -13,9 +13,9 @@
     --jump-md:  -4px;
     --jump-lg:  -2px;
 
-    --scale-xs: 1.08;
+    --scale-xs: 1.01;
     --scale-sm: 1.05;
-    --scale-md: 1.10;
+    --scale-md: 1.01;
     --scale-lg: 1.12;
     --scale-xl: 1.01;
 
@@ -27,103 +27,18 @@
 }
 
 /* ==========================================================
-   🚨 РАДИКАЛЬНЫЙ СБРОС ГРАНИЦ И ФОНОВ В ОБЛАСТИ ЧАТА
+   🎯 ТОЧЕЧНЫЙ СБРОС РАЗДЕЛИТЕЛЕЙ
    ========================================================== */
 
-main [class*="content"],
-main [class*="Content"],
-main [class*="wrapper"],
-main [class*="Wrapper"],
-main [class*="container"],
-main [class*="Container"],
-main [class*="chat"],
-main [class*="Chat"],
-main [class*="messages"],
-main [class*="Messages"],
-main [class*="page"],
-main [class*="Page"],
-main [class*="scroller"],
-main [class*="Scroller"],
-main [class*="inner"],
-main [class*="Inner"],
 main [class*="divider"],
-main [class*="Divider"],
-main [class*="separator"],
-main [class*="Separator"],
-main [class*="split"],
-main [class*="Split"] {
-    border: none !important;
-    border-width: 0 !important;
-    border-color: transparent !important;
-    border-top: none !important;
-    border-bottom: none !important;
-    border-left: none !important;
-    border-right: none !important;
-    outline: none !important;
-    outline-width: 0 !important;
-    outline-color: transparent !important;
-    box-shadow: none !important;
-}
-
-main [class*="content"]::before,
-main [class*="content"]::after,
-main [class*="Content"]::before,
-main [class*="Content"]::after,
-main [class*="wrapper"]::before,
-main [class*="wrapper"]::after,
-main [class*="Wrapper"]::before,
-main [class*="Wrapper"]::after,
-main [class*="chat"]::before,
-main [class*="chat"]::after,
-main [class*="Chat"]::before,
-main [class*="Chat"]::after,
-main [class*="messages"]::before,
-main [class*="messages"]::after,
-main [class*="Messages"]::before,
-main [class*="Messages"]::after,
-main [class*="page"]::before,
-main [class*="page"]::after,
-main [class*="Page"]::before,
-main [class*="Page"]::after,
-main [class*="divider"]::before,
-main [class*="divider"]::after,
-main [class*="separator"]::before,
-main [class*="separator"]::after {
-    border: none !important;
+main [class*="Divider"] {
     border-color: transparent !important;
     box-shadow: none !important;
-    outline: none !important;
-    background: transparent !important;
-    background-image: none !important;
-}
-
-main *,
-main *::before,
-main *::after {
-    border-color: transparent !important;
-}
-
-main div:empty,
-main span:empty {
-    background: transparent !important;
-    background-image: none !important;
-    box-shadow: none !important;
-    border: none !important;
 }
 
 /* ==========================================================
-   🚨 ГЛОБАЛЬНОЕ УБИЙСТВО OUTLINE (focus-ring)
+   🚨 УБИЙСТВО OUTLINE
    ========================================================== */
-
-*:focus,
-*:focus-visible,
-*:focus-within {
-    outline: none !important;
-    outline-width: 0 !important;
-    outline-style: none !important;
-    outline-color: transparent !important;
-    outline-offset: 0 !important;
-}
 
 input:focus-visible,
 textarea:focus-visible,
@@ -132,25 +47,20 @@ select:focus-visible {
     outline-offset: 1px !important;
 }
 
-*::before,
-*::after {
-    outline: none !important;
-}
-
 /* ==========================================================
    🍎 FORCE-ENABLE АНИМАЦИЙ
    ========================================================== */
 
 @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
+    *,
+    *::before,
+    *::after {
         animation-duration: 0.001ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.001ms !important;
         scroll-behavior: auto !important;
     }
-}
 
-@media (prefers-reduced-motion: reduce) {
     nav [class*="wrapper"],
     [class^="panels_"] button,
     [class*=" panels_"] button,
@@ -177,7 +87,7 @@ select:focus-visible {
    🎨 ПАЛИТРА (APPLE NEUTRAL)
    ========================================================== */
 
-:root{
+:root {
     --apple-radius: 12px;
 
     --app-base:        #1c1c1e;
@@ -262,7 +172,9 @@ select:focus-visible {
     --border-subtle-secondary: transparent !important;
 }
 
-html, body, #app-mount {
+html,
+body,
+#app-mount {
     background: #1c1c1e !important;
 }
 
@@ -272,20 +184,48 @@ html, body, #app-mount {
 }
 
 /* ==========================================================
-   ГЛОБАЛЬНОЕ СТЕКЛО
+   🌐 ГЛОБАЛЬНОЕ СТЕКЛО
    ========================================================== */
 
+/*
+   ВАЖНО:
+   Здесь НЕ используем backdrop-filter на больших постоянных
+   контейнерах Discord.
+
+   Именно эти большие blur-слои были источником мерцания.
+*/
+
+/* Нижняя панель профиля */
 [class^="panels_"],
 [class*=" panels_"] {
-    backdrop-filter: blur(24px) saturate(180%) !important;
-    -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+    background: var(--glass-panel) !important;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    box-shadow: none !important;
+
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+
+    transform: none !important;
+    will-change: auto !important;
+
+    backface-visibility: visible !important;
+    -webkit-backface-visibility: visible !important;
 }
 
+/* Основная область чата */
 main[class*="chatContent"] {
     background: var(--glass-chat) !important;
-    backdrop-filter: blur(24px) saturate(180%) !important;
-    -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+
     border-radius: 0 !important;
+
+    transform: none !important;
+    will-change: auto !important;
+
+    backface-visibility: visible !important;
+    -webkit-backface-visibility: visible !important;
 }
 
 /* ==========================================================
@@ -294,9 +234,18 @@ main[class*="chatContent"] {
 
 [class*="sidebar"] {
     background: var(--glass-sidebar) !important;
-    border-right: 1px solid rgba(255,255,255,0.05);
-    backdrop-filter: blur(24px) saturate(180%) !important;
-    -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+
+    border-right:
+        1px solid rgba(255,255,255,0.05);
+
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+
+    transform: none !important;
+    will-change: auto !important;
+
+    backface-visibility: visible !important;
+    -webkit-backface-visibility: visible !important;
 }
 
 [class*="sidebar"] [class*="scroller"],
@@ -306,24 +255,8 @@ main[class*="chatContent"] {
 }
 
 /* ==========================================================
-   НИЖНЯЯ ПАНЕЛЬ ПРОФИЛЯ
+   ВЛОЖЕННЫЕ PANELS
    ========================================================== */
-
-[class^="panels_"],
-[class*=" panels_"] {
-    background: var(--glass-panel) !important;
-    border-top: 1px solid rgba(255,255,255,0.06);
-    box-shadow: none !important;
-
-    backdrop-filter: blur(24px) saturate(180%) !important;
-    -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
-
-    transform: translateZ(0);
-    isolation: isolate;
-    will-change: backdrop-filter;
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-}
 
 [class^="panels_"] [class^="panels_"],
 [class^="panels_"] [class*=" panels_"],
@@ -331,13 +264,15 @@ main[class*="chatContent"] {
 [class*=" panels_"] [class*=" panels_"] {
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
+
     background: transparent !important;
-    transform: none;
-    will-change: auto;
+
+    transform: none !important;
+    will-change: auto !important;
 }
 
 /* ==========================================================
-   🔴 КРАСНЫЕ КНОПКИ (Apple Red) — расширенный селектор
+   🔴 КРАСНЫЕ КНОПКИ (Apple Red)
    ========================================================== */
 
 :is(button, [role="button"], [class*="button_"])[aria-label*="unmute" i],
@@ -349,20 +284,17 @@ main[class*="chatContent"] {
 :is(button, [role="button"], [class*="button_"])[aria-label*="undeafen" i],
 :is(button, [role="button"], [class*="button_"])[aria-label*="включить наушники" i],
 
-/* --- 🔊 ШУМОПОДАВЛЕНИЕ ВЫКЛЮЧЕНО --- */
 :is(button, [role="button"], [class*="button_"])[aria-label*="enable noise" i],
 :is(button, [role="button"], [class*="button_"])[aria-label*="включить шумоподавлен" i],
 :is(button, [role="button"], [class*="button_"])[aria-label*="включить подавлен" i],
 :is(button, [role="button"], [class*="button_"])[aria-label*="noise suppression" i]:not([aria-label*="disable" i]):not([aria-label*="отключ" i]):not([aria-label*="выключ" i]),
 :is(button, [role="button"], [class*="button_"])[aria-label*="шумоподавлен" i]:not([aria-label*="отключ" i]):not([aria-label*="выключ" i]),
 
-/* --- Камера / Видео выключены --- */
 :is(button, [role="button"], [class*="button_"])[aria-label*="камер" i]:not([aria-label*="выключить" i]):not([aria-label*="отключить" i]):not([aria-label*="остановить" i]),
 :is(button, [role="button"], [class*="button_"])[aria-label*="видео" i]:not([aria-label*="выключить" i]):not([aria-label*="отключить" i]),
 :is(button, [role="button"], [class*="button_"])[aria-label*="camera" i]:not([aria-label*="turn off" i]):not([aria-label*="stop" i]),
 :is(button, [role="button"], [class*="button_"])[aria-label*="video" i]:not([aria-label*="turn off" i]):not([aria-label*="stop" i]),
 
-/* --- Стрим / Трансляция --- */
 :is(button, [role="button"], [class*="button_"])[aria-label*="трансляц" i],
 :is(button, [role="button"], [class*="button_"])[aria-label*="стрим" i],
 :is(button, [role="button"], [class*="button_"])[aria-label*="демонстрац" i],
@@ -371,7 +303,6 @@ main[class*="chatContent"] {
 :is(button, [role="button"], [class*="button_"])[aria-label*="stream" i],
 :is(button, [role="button"], [class*="button_"])[aria-label*="go live" i],
 
-/* --- Fallback по классам --- */
 :is(button, [role="button"], [class*="button_"])[class*="red"][class*="button"],
 :is(button, [role="button"], [class*="button_"])[class*="danger"][class*="button"],
 :is(button, [role="button"], [class*="button_"])[class*="critical"][class*="button"] {
@@ -379,10 +310,14 @@ main[class*="chatContent"] {
     background-color: var(--danger) !important;
     border: none !important;
     color: #ffffff !important;
-    box-shadow: 0 0 14px var(--danger-glow) !important;
-    transition: transform var(--dur-fast) var(--spring),
-                background 0.15s ease,
-                box-shadow 0.15s ease !important;
+
+    box-shadow:
+        0 0 14px var(--danger-glow) !important;
+
+    transition:
+        transform var(--dur-fast) var(--spring),
+        background 0.15s ease,
+        box-shadow 0.15s ease !important;
 }
 
 :is(button, [role="button"], [class*="button_"])[aria-label*="unmute" i]:hover,
@@ -442,7 +377,7 @@ main[class*="chatContent"] {
 }
 
 /* ==========================================================
-   🎨 АКЦЕНТНАЯ КНОПКА (кремовая, тёмный текст)
+   🎨 АКЦЕНТНАЯ КНОПКА
    ========================================================== */
 
 :is(button, [role="button"], [class*="button_"])[aria-label*="выключить камер" i],
@@ -455,10 +390,14 @@ main[class*="chatContent"] {
     background-color: var(--accent) !important;
     border: none !important;
     color: var(--accent-text) !important;
-    box-shadow: 0 4px 18px var(--accent-glow) !important;
-    transition: transform var(--dur-fast) var(--spring),
-                background 0.15s ease,
-                box-shadow 0.15s ease !important;
+
+    box-shadow:
+        0 4px 18px var(--accent-glow) !important;
+
+    transition:
+        transform var(--dur-fast) var(--spring),
+        background 0.15s ease,
+        box-shadow 0.15s ease !important;
 }
 
 :is(button, [role="button"], [class*="button_"])[aria-label*="выключить камер" i]:hover,
@@ -484,22 +423,35 @@ main[class*="chatContent"] {
    ========================================================== */
 
 form [class^="channelTextArea_"] {
-    background: rgba(255, 255, 255, 0.035) !important;
-    border: none !important;
-    box-shadow: none !important;
-    outline: none !important;
-    border-radius: 20px !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
+    background:
+        rgba(255, 255, 255, 0.035) !important;
+
+    border:
+        none !important;
+
+    box-shadow:
+        none !important;
+
+    outline:
+        none !important;
+
+    border-radius:
+        20px !important;
+
+    backdrop-filter:
+        none !important;
+
+    -webkit-backdrop-filter:
+        none !important;
 }
 
 form [class^="channelTextArea_"]::before,
-form [class^="channelTextArea_"]::after,
-form [class^="channelTextArea_"] *::before,
-form [class^="channelTextArea_"] *::after {
-    border: none !important;
-    box-shadow: none !important;
-    background-image: none !important;
+form [class^="channelTextArea_"]::after {
+    border:
+        none !important;
+
+    box-shadow:
+        none !important;
 }
 
 form [class^="channelTextArea_"] [class^="scrollableContainer_"],
@@ -507,21 +459,36 @@ form [class^="channelTextArea_"] [class^="inner_"],
 form [class^="channelTextArea_"] [class^="textArea_"],
 form [class^="channelTextArea_"] [class^="placeholder_"],
 [class^="slateTextArea_"] {
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-    outline: none !important;
+    background:
+        transparent !important;
+
+    border:
+        none !important;
+
+    box-shadow:
+        none !important;
+
+    outline:
+        none !important;
 }
 
 form [class^="channelTextArea_"] button {
-    background: transparent !important;
-    transform: none !important;
-    transition: background-color 0.15s ease !important;
-    border-radius: 8px !important;
+    background:
+        transparent !important;
+
+    transform:
+        none !important;
+
+    transition:
+        background-color 0.15s ease !important;
+
+    border-radius:
+        8px !important;
 }
 
 form [class^="channelTextArea_"] button:hover {
-    background: rgba(255, 255, 255, 0.08) !important;
+    background:
+        rgba(255, 255, 255, 0.08) !important;
 }
 
 /* ==========================================================
@@ -529,114 +496,205 @@ form [class^="channelTextArea_"] button:hover {
    ========================================================== */
 
 nav [class*="wrapper"] {
-    transition: transform var(--dur-mid) var(--spring),
-                box-shadow var(--dur-mid) ease !important;
-    will-change: transform;
+    transition:
+        transform var(--dur-mid) var(--spring),
+        box-shadow var(--dur-mid) ease !important;
+
+    will-change:
+        auto !important;
+
+    backface-visibility:
+        visible !important;
+
+    -webkit-backface-visibility:
+        visible !important;
 }
 
 nav [class*="wrapper"]:hover {
-    transform: translateY(var(--jump-md)) scale(var(--scale-lg)) !important;
-    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.5),
-                0 0 0 1px rgba(255, 255, 255, 0.06) !important;
+    transform:
+        translateY(var(--jump-md))
+        scale(var(--scale-lg)) !important;
+
+    box-shadow:
+        0 10px 22px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(255, 255, 255, 0.06) !important;
 }
 
 nav [aria-selected="true"] [class*="wrapper"]:hover {
-    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.5),
-                0 0 0 1px rgba(255, 255, 255, 0.06),
-                0 0 14px var(--accent-glow),
-                0 0 28px var(--accent-glow) !important;
+    box-shadow:
+        0 10px 22px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(255, 255, 255, 0.06),
+        0 0 14px var(--accent-glow),
+        0 0 28px var(--accent-glow) !important;
 }
 
 nav [class*="wrapper"]:active {
-    transform: translateY(-1px) scale(1.06) !important;
-    transition: transform 0.08s ease !important;
+    transform:
+        translateY(-1px)
+        scale(1.06) !important;
+
+    transition:
+        transform 0.08s ease !important;
 }
+
+/* ==========================================================
+   НИЖНЯЯ ПАНЕЛЬ — КНОПКИ
+   ========================================================== */
 
 [class^="panels_"] button,
 [class*=" panels_"] button {
-    transition: transform var(--dur-mid) var(--spring),
-                background 0.15s ease,
-                box-shadow 0.15s ease,
-                color 0.15s ease !important;
-    will-change: transform;
+    transition:
+        transform var(--dur-mid) var(--spring),
+        background 0.15s ease,
+        box-shadow 0.15s ease,
+        color 0.15s ease !important;
+
+    will-change:
+        auto !important;
+
+    backface-visibility:
+        visible !important;
+
+    -webkit-backface-visibility:
+        visible !important;
 }
 
 [class^="panels_"] button:hover,
 [class*=" panels_"] button:hover {
-    transform: translateY(var(--jump-sm)) scale(var(--scale-md)) !important;
+    transform:
+        translateY(var(--jump-sm))
+        scale(var(--scale-md)) !important;
 }
 
 [class^="panels_"] button:active,
 [class*=" panels_"] button:active {
-    transform: translateY(-1px) scale(1.05) !important;
-    transition: transform 0.08s ease !important;
+    transform:
+        translateY(-1px)
+        scale(1.05) !important;
+
+    transition:
+        transform 0.08s ease !important;
 }
+
+/* ==========================================================
+   🎙️ VOICE BUTTONS
+   ========================================================== */
 
 [class*="voice"] button,
 [class*="Voice"] button {
-    transition: transform var(--dur-mid) var(--spring),
-                background 0.15s ease,
-                box-shadow 0.15s ease,
-                color 0.15s ease !important;
-    will-change: transform;
+    transition:
+        transform var(--dur-mid) var(--spring),
+        background 0.15s ease,
+        box-shadow 0.15s ease,
+        color 0.15s ease !important;
+
+    will-change:
+        auto !important;
 }
 
 [class*="voice"] button:hover,
 [class*="Voice"] button:hover {
-    transform: translateY(var(--jump-sm)) scale(var(--scale-md)) !important;
+    transform:
+        translateY(var(--jump-sm))
+        scale(var(--scale-md)) !important;
 }
 
 [class*="voice"] button:active,
 [class*="Voice"] button:active {
-    transform: translateY(-1px) scale(1.05) !important;
-    transition: transform 0.08s ease !important;
+    transform:
+        translateY(-1px)
+        scale(1.05) !important;
+
+    transition:
+        transform 0.08s ease !important;
 }
+
+/* ==========================================================
+   BRAND BUTTON
+   ========================================================== */
 
 [class*="button"][class*="colorBrand"],
 [class*="lookFilled"][class*="colorBrand"] {
-    transition: transform var(--dur-mid) var(--spring),
-                background 0.2s ease,
-                box-shadow 0.2s ease !important;
+    transition:
+        transform var(--dur-mid) var(--spring),
+        background 0.2s ease,
+        box-shadow 0.2s ease !important;
+
+    will-change:
+        auto !important;
 }
 
 [class*="button"][class*="colorBrand"]:hover,
 [class*="lookFilled"][class*="colorBrand"]:hover {
-    transform: translateY(var(--jump-xs)) scale(var(--scale-sm)) !important;
+    transform:
+        translateY(var(--jump-xs))
+        scale(var(--scale-sm)) !important;
 }
 
 [class*="button"][class*="colorBrand"]:active,
 [class*="lookFilled"][class*="colorBrand"]:active {
-    transform: translateY(0) scale(0.98) !important;
-    transition: transform 0.08s ease !important;
+    transform:
+        translateY(0)
+        scale(0.98) !important;
+
+    transition:
+        transform 0.08s ease !important;
 }
+
+/* ==========================================================
+   MESSAGE BUTTONS
+   ========================================================== */
 
 [class*="message"] [class*="button"]:hover,
 [class*="message"] [role="button"]:hover,
 [class*="reaction_"]:hover {
-    transform: translateY(var(--jump-xs)) scale(var(--scale-md)) !important;
-    transition: transform var(--dur-fast) var(--spring) !important;
+    transform:
+        translateY(var(--jump-xs))
+        scale(var(--scale-md)) !important;
+
+    transition:
+        transform var(--dur-fast) var(--spring) !important;
 }
+
+/* ==========================================================
+   TOOLBAR
+   ========================================================== */
 
 [class*="toolbar"] button,
 [class*="Toolbar"] button {
-    transition: transform var(--dur-fast) var(--spring) !important;
+    transition:
+        transform var(--dur-fast) var(--spring) !important;
+
+    will-change:
+        auto !important;
 }
 
 [class*="toolbar"] button:hover,
 [class*="Toolbar"] button:hover {
-    transform: translateY(var(--jump-xs)) scale(var(--scale-lg)) !important;
-}
-
-[class*="member"] [class*="avatar"]:hover,
-[class*="Member"] [class*="avatar"]:hover {
-    transform: translateY(var(--jump-xs)) scale(var(--scale-xs)) !important;
-    transition: transform var(--dur-fast) var(--spring) !important;
+    transform:
+        translateY(var(--jump-xs))
+        scale(var(--scale-lg)) !important;
 }
 
 /* ==========================================================
-   🏷️ НИКИ (username / nickname) в сообщениях чата
-   Прыжок работает ТОЛЬКО в обычных сообщениях текстового
-   канала. Внутри голосового чата / плиток — не работает.
+   AVATAR HOVER
+   ========================================================== */
+
+[class*="member"] [class*="avatar"]:hover,
+[class*="Member"] [class*="avatar"]:hover {
+    transform:
+        translateY(var(--jump-xs))
+        scale(var(--scale-xs)) !important;
+
+    transition:
+        transform var(--dur-fast) var(--spring) !important;
+
+    will-change:
+        auto !important;
+}
+
+/* ==========================================================
+   🏷️ НИКИ
    ========================================================== */
 
 [class^="username_"],
@@ -647,11 +705,18 @@ nav [class*="wrapper"]:active {
 [class*=" nickname_"],
 [class^="Nickname_"],
 [class*=" Nickname_"] {
-    display: inline-block !important;
-    transition: transform var(--dur-fast) var(--spring),
-                color 0.15s ease !important;
-    will-change: transform;
-    transform-origin: left center;
+    display:
+        inline-block !important;
+
+    transition:
+        transform var(--dur-fast) var(--spring),
+        color 0.15s ease !important;
+
+    transform-origin:
+        left center;
+
+    will-change:
+        auto !important;
 }
 
 [class^="username_"]:hover,
@@ -662,13 +727,21 @@ nav [class*="wrapper"]:active {
 [class*=" nickname_"]:hover,
 [class^="Nickname_"]:hover,
 [class*=" Nickname_"]:hover {
-    transform: translateY(var(--jump-xs)) scale(1.06) !important;
-    z-index: 3;
-    position: relative;
+    transform:
+        translateY(var(--jump-xs))
+        scale(1.06) !important;
+
+    z-index:
+        3;
+
+    position:
+        relative;
 }
 
-/* Полное отключение любых hover-эффектов на никах внутри
-   голосовых каналов / плиток / стримов */
+/* ==========================================================
+   ГОЛОС / ПЛИТКИ
+   ========================================================== */
+
 [class*="tile_"] [class^="username_"],
 [class*="tile_"] [class^="nickname_"],
 [class*="Tile_"] [class^="username_"],
@@ -688,7 +761,6 @@ nav [class*="wrapper"]:active {
 [class*="VoicePanel_"] [class^="username_"],
 [class*="VoicePanel_"] [class^="nickname_"],
 
-/* + варианты с класс-атрибутом посередине */
 [class*="tile_"] [class*=" username_"],
 [class*="tile_"] [class*=" nickname_"],
 [class*="Tile_"] [class*=" username_"],
@@ -705,11 +777,20 @@ nav [class*="wrapper"]:active {
 [class*="callContainer_"] [class*=" nickname_"],
 [class*="voicePanel_"] [class*=" username_"],
 [class*="voicePanel_"] [class*=" nickname_"] {
-    transform: none !important;
-    position: static !important;
-    z-index: auto !important;
-    will-change: auto !important;
-    transition: color 0.15s ease !important;
+    transform:
+        none !important;
+
+    position:
+        static !important;
+
+    z-index:
+        auto !important;
+
+    transition:
+        color 0.15s ease !important;
+
+    will-change:
+        auto !important;
 }
 
 [class*="tile_"] [class^="username_"]:hover,
@@ -726,16 +807,21 @@ nav [class*="wrapper"]:active {
 [class*="callContainer_"] [class^="nickname_"]:hover,
 [class*="voicePanel_"] [class^="username_"]:hover,
 [class*="voicePanel_"] [class^="nickname_"]:hover {
-    transform: none !important;
-    position: static !important;
-    z-index: auto !important;
-    color: var(--accent) !important;
+    transform:
+        none !important;
+
+    position:
+        static !important;
+
+    z-index:
+        auto !important;
+
+    color:
+        var(--accent) !important;
 }
 
 /* ==========================================================
-🎬 ПЛИТКИ СТРИМА / ВИДЕО
-   НЕ используем transform — он ломает раскладку сетки и
-   выезжает за пределы контейнера. Только лёгкое свечение.
+   🎬 ПЛИТКИ СТРИМА / ВИДЕО
    ========================================================== */
 
 [class*="tile_"],
@@ -746,8 +832,14 @@ nav [class*="wrapper"]:active {
 [class*="participant_"],
 [class*="Participant_"],
 [class*="callContainer_"] > [class*="wrapper_"] {
-    transition: box-shadow var(--dur-mid) ease !important;
-    transform: none !important;
+    transition:
+        box-shadow var(--dur-mid) ease !important;
+
+    transform:
+        none !important;
+
+    will-change:
+        auto !important;
 }
 
 [class*="tile_"]:hover,
@@ -756,9 +848,12 @@ nav [class*="wrapper"]:active {
 [class*="streamPreview_"]:hover,
 [class*="participant_"]:hover,
 [class*="Participant_"]:hover {
-    transform: none !important;
-    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08),
-                0 0 14px var(--accent-glow) !important;
+    transform:
+        none !important;
+
+    box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.08),
+        0 0 14px var(--accent-glow) !important;
 }
 
 /* ==========================================================
@@ -769,32 +864,53 @@ nav [class*="wrapper"]:active {
 [class*=" member_"],
 [class^="Member_"],
 [class*=" Member_"] {
-    transition: transform var(--dur-mid) var(--spring),
-                background 0.15s ease,
-                border-radius 0.15s ease,
-                box-shadow 0.2s ease !important;
-    will-change: transform;
-    transform-origin: left center;
+    transition:
+        transform var(--dur-mid) var(--spring),
+        background 0.15s ease,
+        border-radius 0.15s ease,
+        box-shadow 0.2s ease !important;
+
+    transform-origin:
+        left center;
+
+    will-change:
+        auto !important;
 }
 
 [class^="member_"]:hover,
 [class*=" member_"]:hover,
 [class^="Member_"]:hover,
 [class*=" Member_"]:hover {
-    transform: translateY(var(--jump-sm)) scale(var(--scale-sm)) !important;
-    background: rgba(255, 255, 255, 0.05) !important;
-    border-radius: 8px !important;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35),
-                0 0 0 1px rgba(255, 255, 255, 0.04) !important;
-    z-index: 5;
-    position: relative;
+    transform:
+        translateY(var(--jump-sm))
+        scale(var(--scale-sm)) !important;
+
+    background:
+        rgba(255, 255, 255, 0.05) !important;
+
+    border-radius:
+        8px !important;
+
+    box-shadow:
+        0 4px 14px rgba(0, 0, 0, 0.35),
+        0 0 0 1px rgba(255, 255, 255, 0.04) !important;
+
+    z-index:
+        5;
+
+    position:
+        relative;
 }
 
 [class^="member_"]:active,
 [class*=" member_"]:active,
 [class^="Member_"]:active {
-    transform: translateY(-1px) scale(1.02) !important;
-    transition: transform 0.08s ease !important;
+    transform:
+        translateY(-1px)
+        scale(1.02) !important;
+
+    transition:
+        transform 0.08s ease !important;
 }
 
 /* ==========================================================
@@ -805,70 +921,109 @@ nav [class*="wrapper"]:active {
 [class*=" voiceUser_"],
 [class^="VoiceUser_"],
 [class*=" VoiceUser_"] {
-    transition: transform var(--dur-mid) var(--spring),
-                background 0.15s ease,
-                border-radius 0.15s ease,
-                box-shadow 0.2s ease !important;
-    will-change: transform;
-    transform-origin: left center;
+    transition:
+        transform var(--dur-mid) var(--spring),
+        background 0.15s ease,
+        border-radius 0.15s ease,
+        box-shadow 0.2s ease !important;
+
+    transform-origin:
+        left center;
+
+    will-change:
+        auto !important;
 }
 
 [class^="voiceUser_"]:hover,
 [class*=" voiceUser_"]:hover,
 [class^="VoiceUser_"]:hover,
 [class*=" VoiceUser_"]:hover {
-    transform: translateY(var(--jump-sm)) scale(var(--scale-sm)) !important;
-    background: rgba(255, 255, 255, 0.05) !important;
-    border-radius: 8px !important;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35),
-                0 0 0 1px rgba(255, 255, 255, 0.04) !important;
-    z-index: 5;
-    position: relative;
+    transform:
+        translateY(var(--jump-sm))
+        scale(var(--scale-sm)) !important;
+
+    background:
+        rgba(255, 255, 255, 0.05) !important;
+
+    border-radius:
+        8px !important;
+
+    box-shadow:
+        0 4px 14px rgba(0, 0, 0, 0.35),
+        0 0 0 1px rgba(255, 255, 255, 0.04) !important;
+
+    z-index:
+        5;
+
+    position:
+        relative;
 }
 
 [class^="voiceUser_"]:active,
 [class*=" voiceUser_"]:active,
 [class^="VoiceUser_"]:active {
-    transform: translateY(-1px) scale(1.02) !important;
-    transition: transform 0.08s ease !important;
+    transform:
+        translateY(-1px)
+        scale(1.02) !important;
+
+    transition:
+        transform 0.08s ease !important;
 }
 
 /* ==========================================================
-   СЕРВЕРЫ (активное состояние)
+   СЕРВЕРЫ — АКТИВНОЕ СОСТОЯНИЕ
    ========================================================== */
 
 nav [aria-selected="true"] [class*="wrapper"] {
-    border-radius: var(--apple-radius) !important;
-    box-shadow: 0 0 14px var(--accent-glow), 0 0 28px var(--accent-glow) !important;
+    border-radius:
+        var(--apple-radius) !important;
+
+    box-shadow:
+        0 0 14px var(--accent-glow),
+        0 0 28px var(--accent-glow) !important;
 }
 
 /* ==========================================================
-   🎨 АКЦЕНТНЫЕ КНОПКИ (кремовые, тёмный текст)
+   🎨 АКЦЕНТНЫЕ КНОПКИ
    ========================================================== */
 
 :where([class*="button"][class*="colorBrand"]),
 :where([class*="lookFilled"][class*="colorBrand"]) {
-    background: var(--accent) !important;
-    color: var(--accent-text) !important;
-    border-radius: 999px !important;
-    box-shadow: 0 4px 18px var(--accent-glow);
+    background:
+        var(--accent) !important;
+
+    color:
+        var(--accent-text) !important;
+
+    border-radius:
+        999px !important;
+
+    box-shadow:
+        0 4px 18px var(--accent-glow);
 }
 
 :where([class*="button"][class*="colorBrand"]):hover,
 :where([class*="lookFilled"][class*="colorBrand"]):hover {
-    box-shadow: 0 6px 22px var(--accent-glow-hov);
-    background: var(--accent-hover) !important;
+    box-shadow:
+        0 6px 22px var(--accent-glow-hov);
+
+    background:
+        var(--accent-hover) !important;
 }
 
 :where([class*="button"][class*="colorBrand"]) svg,
 :where([class*="lookFilled"][class*="colorBrand"]) svg {
-    color: var(--accent-text) !important;
-    fill: var(--accent-text) !important;
+    color:
+        var(--accent-text) !important;
+
+    fill:
+        var(--accent-text) !important;
 }
 
 :where([class*="button"][class*="colorBrand"]) *,
 :where([class*="lookFilled"][class*="colorBrand"]) * {
-    color: var(--accent-text) !important;
+    color:
+        var(--accent-text) !important;
 }
 
 /* ==========================================================
@@ -878,12 +1033,25 @@ nav [aria-selected="true"] [class*="wrapper"] {
 [class*="popout"],
 [class*="modal"],
 [class*="tooltip"] {
-    background: var(--glass-popout) !important;
-    backdrop-filter: blur(30px) saturate(180%) !important;
-    -webkit-backdrop-filter: blur(30px) saturate(180%) !important;
-    border: 1px solid rgba(255,255,255,.08) !important;
-    box-shadow: 0 10px 40px rgba(0,0,0,.4) !important;
-    border-radius: 18px !important;
+    background:
+        var(--glass-popout) !important;
+
+    backdrop-filter:
+        blur(30px)
+        saturate(180%) !important;
+
+    -webkit-backdrop-filter:
+        blur(30px)
+        saturate(180%) !important;
+
+    border:
+        1px solid rgba(255,255,255,.08) !important;
+
+    box-shadow:
+        0 10px 40px rgba(0,0,0,.4) !important;
+
+    border-radius:
+        18px !important;
 }
 
 /* ==========================================================
@@ -892,38 +1060,72 @@ nav [aria-selected="true"] [class*="wrapper"] {
 
 [class^="reactions_"],
 [class*=" reactions_"] {
-    box-sizing: border-box !important;
-    align-items: center !important;
+    box-sizing:
+        border-box !important;
+
+    align-items:
+        center !important;
+
+    will-change:
+        auto !important;
 }
 
 [class^="reaction_"],
 [class*=" reaction_"] {
-    background: rgba(255, 255, 255, 0.06) !important;
-    border-radius: 999px !important;
-    box-sizing: border-box !important;
-    transform: none !important;
-    vertical-align: middle !important;
+    background:
+        rgba(255, 255, 255, 0.06) !important;
+
+    border-radius:
+        999px !important;
+
+    box-sizing:
+        border-box !important;
+
+    transform:
+        none !important;
+
+    vertical-align:
+        middle !important;
+
+    will-change:
+        auto !important;
 }
 
 [class^="reactionInner_"],
 [class*=" reactionInner_"] {
-    box-sizing: border-box !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    vertical-align: middle !important;
-    transform: none !important;
+    box-sizing:
+        border-box !important;
+
+    display:
+        inline-flex !important;
+
+    align-items:
+        center !important;
+
+    justify-content:
+        center !important;
+
+    vertical-align:
+        middle !important;
+
+    transform:
+        none !important;
 }
 
 [class^="reactionInner_"] img.emoji,
 [class*=" reactionInner_"] img.emoji {
-    vertical-align: middle !important;
+    vertical-align:
+        middle !important;
 }
 
 [class^="reaction_"]:hover,
 [class*=" reaction_"]:hover {
-    transform: translateY(var(--jump-xs)) scale(var(--scale-xs)) !important;
-    transition: transform var(--dur-fast) var(--spring) !important;
+    transform:
+        translateY(var(--jump-xs))
+        scale(var(--scale-xs)) !important;
+
+    transition:
+        transform var(--dur-fast) var(--spring) !important;
 }
 
 /* ==========================================================
@@ -931,9 +1133,14 @@ nav [aria-selected="true"] [class*="wrapper"] {
    ========================================================== */
 
 [class*="searchBar"] {
-    background: rgba(255,255,255,0.05) !important;
-    border-radius: 14px !important;
-    border: 1px solid rgba(255,255,255,0.03) !important;
+    background:
+        rgba(255,255,255,0.05) !important;
+
+    border-radius:
+        14px !important;
+
+    border:
+        1px solid rgba(255,255,255,0.03) !important;
 }
 
 /* ==========================================================
@@ -941,31 +1148,42 @@ nav [aria-selected="true"] [class*="wrapper"] {
    ========================================================== */
 
 ::-webkit-scrollbar {
-    width: 8px;
+    width:
+        8px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: rgba(255,255,255,0.15);
-    border-radius: 999px;
+    background:
+        rgba(255,255,255,0.15);
+
+    border-radius:
+        999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: rgba(255,255,255,0.25);
+    background:
+        rgba(255,255,255,0.25);
 }
 
 ::-webkit-scrollbar-track {
-    background: transparent;
+    background:
+        transparent;
 }
 
 /* ==========================================================
    ЗАГОЛОВКИ
    ========================================================== */
 
-h1, h2, h3,
+h1,
+h2,
+h3,
 [class*="title"],
 [class*="name"] {
-    font-weight: 600 !important;
-    letter-spacing: 0.1px;
+    font-weight:
+        600 !important;
+
+    letter-spacing:
+        0.1px;
 }
 
 /* ==========================================================
@@ -974,10 +1192,19 @@ h1, h2, h3,
 
 [class*="userPopout"],
 [class*="profilePanel"] {
-    backdrop-filter: blur(32px) saturate(180%) !important;
-    -webkit-backdrop-filter: blur(32px) saturate(180%) !important;
-    background: var(--glass-popout) !important;
-    border: 1px solid rgba(255,255,255,.08) !important;
+    backdrop-filter:
+        blur(32px)
+        saturate(180%) !important;
+
+    -webkit-backdrop-filter:
+        blur(32px)
+        saturate(180%) !important;
+
+    background:
+        var(--glass-popout) !important;
+
+    border:
+        1px solid rgba(255,255,255,.08) !important;
 }
 
 /* ==========================================================
@@ -985,20 +1212,33 @@ h1, h2, h3,
    ========================================================== */
 
 [class*="modeSelected"] {
-    background: rgba(255,255,255,0.08) !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    border-radius: 12px !important;
-    border: none !important;
-    box-shadow: 
+    background:
+        rgba(255,255,255,0.08) !important;
+
+    backdrop-filter:
+        none !important;
+
+    -webkit-backdrop-filter:
+        none !important;
+
+    border-radius:
+        12px !important;
+
+    border:
+        none !important;
+
+    box-shadow:
         inset 0 0 0 1px rgba(255,255,255,0.05),
         0 0 12px var(--accent-glow),
         0 0 24px var(--accent-glow) !important;
-    transform: none !important;
+
+    transform:
+        none !important;
 }
 
 [class*="modeSelected"] svg {
-    color: var(--accent) !important;
+    color:
+        var(--accent) !important;
 }
 
 /* ==========================================================
@@ -1009,31 +1249,199 @@ h1, h2, h3,
 [class*="tutorialContainer_"] [class*="childWrapper_"] svg[aria-hidden="true"],
 [class*="homeIcon_"] svg,
 [class*="HomeIcon_"] svg {
-    display: none !important;
-    visibility: hidden !important;
-    opacity: 0 !important;
+    display:
+        none !important;
+
+    visibility:
+        hidden !important;
+
+    opacity:
+        0 !important;
 }
 
 [class*="tutorialContainer_"] [class*="childWrapper_"],
 [class*="homeIcon_"] [class*="childWrapper_"],
 [class*="HomeIcon_"] [class*="childWrapper_"] {
-    background-color: var(--accent) !important;
-    background-image: none !important;
+    background-color:
+        var(--accent) !important;
+
+    background-image:
+        none !important;
 
     -webkit-mask-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2024%2024%27%3E%3Cpath%20d%3D%27M17.05%2020.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24%200-1.44.62-2.2.44-3.06-.35C2.79%2015.25%203.51%207.59%209.05%207.31c1.35.07%202.29.74%203.08.8%201.18-.24%202.31-.93%203.57-.84%201.51.12%202.65.72%203.4%201.8-3.12%201.87-2.38%205.98.48%207.13-.57%201.5-1.31%202.99-2.54%204.09l.01-.01M12.03%207.25c-.15-2.23%201.66-4.07%203.74-4.25.29%202.58-2.34%204.5-3.74%204.25z%27%20fill%3D%27black%27%2F%3E%3C%2Fsvg%3E");
+
     mask-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2024%2024%27%3E%3Cpath%20d%3D%27M17.05%2020.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24%200-1.44.62-2.2.44-3.06-.35C2.79%2015.25%203.51%207.59%209.05%207.31c1.35.07%202.29.74%203.08.8%201.18-.24%202.31-.93%203.57-.84%201.51.12%202.65.72%203.4%201.8-3.12%201.87-2.38%205.98.48%207.13-.57%201.5-1.31%202.99-2.54%204.09l.01-.01M12.03%207.25c-.15-2.23%201.66-4.07%203.74-4.25.29%202.58-2.34%204.5-3.74%204.25z%27%20fill%3D%27black%27%2F%3E%3C%2Fsvg%3E");
 
-    -webkit-mask-size: 60% 60%;
-    mask-size: 60% 60%;
-    -webkit-mask-position: center;
-    mask-position: center;
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
-    -webkit-mask-mode: alpha;
-    mask-mode: alpha;
+    -webkit-mask-size:
+        60% 60%;
+
+    mask-size:
+        60% 60%;
+
+    -webkit-mask-position:
+        center;
+
+    mask-position:
+        center;
+
+    -webkit-mask-repeat:
+        no-repeat;
+
+    mask-repeat:
+        no-repeat;
+
+    -webkit-mask-mode:
+        alpha;
+
+    mask-mode:
+        alpha;
 }
 
 [class*="tutorialContainer_"]:hover [class*="childWrapper_"],
 [class*="homeIcon_"]:hover [class*="childWrapper_"] {
-    background-color: var(--accent-hover) !important;
+    background-color:
+        var(--accent-hover) !important;
+}
+
+/* ==========================================================
+   🚨 ANTI-FLICKER FINAL FIX
+   ========================================================== */
+
+/*
+   На постоянно видимых областях Discord больше нет
+   backdrop-filter и принудительного GPU-композитинга.
+*/
+
+/* Sidebar */
+[class*="sidebar"] {
+    backdrop-filter:
+        none !important;
+
+    -webkit-backdrop-filter:
+        none !important;
+
+    transform:
+        none !important;
+
+    will-change:
+        auto !important;
+
+    backface-visibility:
+        visible !important;
+
+    -webkit-backface-visibility:
+        visible !important;
+}
+
+/* Основной чат */
+main[class*="chatContent"] {
+    backdrop-filter:
+        none !important;
+
+    -webkit-backdrop-filter:
+        none !important;
+
+    transform:
+        none !important;
+
+    will-change:
+        auto !important;
+
+    backface-visibility:
+        visible !important;
+
+    -webkit-backface-visibility:
+        visible !important;
+}
+
+/* Нижняя панель */
+[class^="panels_"],
+[class*=" panels_"] {
+    backdrop-filter:
+        none !important;
+
+    -webkit-backdrop-filter:
+        none !important;
+
+    transform:
+        none !important;
+
+    will-change:
+        auto !important;
+
+    backface-visibility:
+        visible !important;
+
+    -webkit-backface-visibility:
+        visible !important;
+}
+
+/* Кнопки панели */
+[class^="panels_"] button,
+[class*=" panels_"] button,
+[class*="voice"] button,
+[class*="Voice"] button {
+    will-change:
+        auto !important;
+
+    backface-visibility:
+        visible !important;
+
+    -webkit-backface-visibility:
+        visible !important;
+}
+
+/* Серверы */
+nav [class*="wrapper"] {
+    will-change:
+        auto !important;
+
+    backface-visibility:
+        visible !important;
+
+    -webkit-backface-visibility:
+        visible !important;
+}
+
+/* Участники */
+[class*="member_"],
+[class*="Member_"],
+[class*="voiceUser_"],
+[class*="VoiceUser_"] {
+    will-change:
+        auto !important;
+
+    backface-visibility:
+        visible !important;
+
+    -webkit-backface-visibility:
+        visible !important;
+}
+
+/* Реакции */
+[class*="reaction_"],
+[class*="reactions_"] {
+    will-change:
+        auto !important;
+
+    backface-visibility:
+        visible !important;
+
+    -webkit-backface-visibility:
+        visible !important;
+}
+
+/* Попапы / модалки / профили — blur сохраняем */
+[class*="popout"],
+[class*="modal"],
+[class*="tooltip"],
+[class*="userPopout"],
+[class*="profilePanel"] {
+    backdrop-filter:
+        blur(30px)
+        saturate(180%) !important;
+
+    -webkit-backdrop-filter:
+        blur(30px)
+        saturate(180%) !important;
 }
